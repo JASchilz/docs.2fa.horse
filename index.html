@@ -51,13 +51,13 @@ Host: api.2fa.horse
 Content-Type: application/json
 Content-Length: 32
 
-{"phone number": "555-867-5309"}</div>
+{"phone_number": "+15558675309"}</div>
 
     
     <div style="display:none;" class="you code curl">$ curl -i http://api.2fa.horse/v1/jobs/ \
   --header "Content-Type: application/json" \
   --request POST \
-  --data '{"phone_number":"555-867-5309"}'</div>
+  --data '{"phone_number":"+15558675309"}'</div>
 
     <div class="server">HTTP/1.1 201 CREATED
 Date: Thurs, 01 Jan 1970 00:00:00 GMT
@@ -106,7 +106,7 @@ Content-Type: application/json; charset=utf8
 <br style="clear:both">
 <br>
 
-<p>The price is currently $0.12 per job, but that will come down if this application sees significant use.</p>
+<p>The price is currently $0.12 per job plus my cost to send the SMS. This cost varies by country, but ranges mostly between $0.01 and $0.10. The cost will come down if this application sees significant use.</p>
 
 <h2>About</h2>
 
@@ -117,7 +117,7 @@ Content-Type: application/json; charset=utf8
   <li>If the service becomes popular or gets moderate interest:
     <ol>
         <li>I'll include more helpful features. 
-        <li>The price of the service will go down. It currently costs you $0.12 to use the `2fa.horse`.
+        <li>The price of the service will go down. It currently costs you $0.12 to use the 2fa.horse.
         <li>I'll construct a strong service guarantee and terms of service.
     </ol>
 </ol>
@@ -128,7 +128,7 @@ Content-Type: application/json; charset=utf8
 
 <p>Bitcoin means different things to different people. Bitcoin excites me because it facilitates computer-to-computer payments. With the lightning network, Bitcoin supports computer-to-computer micropayments.</p>
 
-</p>And now, your lightning-enabled software and devices can purchase 2FA services from the `2fa.horse`. I've created the `2fa.horse` as an example of a useful, lightning-enabled, microservice provider.</p>
+</p>And now, your lightning-enabled software and devices can purchase 2FA services from the 2fa.horse. I've created the 2fa.horse as an example of a useful, lightning-enabled, microservice provider.</p>
 
 <p>The coolest project that I could imagine using this for is a lightning-network hardware wallet. If the user needed to perform some administrative function, like retrieving their wallet seed, then the wallet could autonomously issue a request to the 2fa.horse to help authenticate the user.</p>
 
@@ -144,31 +144,33 @@ Content-Type: application/json; charset=utf8
 
 <h2>Errors</h2>
 
-<h3>400 Bad Request: "Bad Number Format"</h3>
+<h3>400 Bad Request: "Bad Number or Format"</h3>
 
 <div class="server">HTTP/1.1 400 Bad Request
 Content-Type: application/json; charset=utf8
 
 {
-  "cause": "Bad number format",
-  "detail": "Your phone number is formatted incorrectly.
-              Please use the format nnn-nnn-nnnn."
+  "cause": "Bad number format or format",
+  "detail": "Your phone number is invalid or is formatted
+             incorrectly. Please use the format +nnnnnnnn
+             according to the format of your country."
 }</div>
 
 <p>Fix your number format.</p>
 
-<h3>400 Bad Request: "Bad Number"</h3>
+<h3>400 Bad Request: "Unavailable Locale"</h3>
 
 <div class="server">HTTP/1.1 400 Bad Request
 Content-Type: application/json; charset=utf8
 
 {
-  "cause": "Bad number",
-  "detail": "Invalid phone number, or we can't send
-             texts to this locale."
+  "cause": "Unavailable locale",
+  "detail": "We're unable to send messages to this locale."
 }</div>
 
 <p>Sorry.</p>
+
+<p>An incorrectly formatted phone number 
 
 <h3>400 Bad Request: "Rate Limit"</h3>
 
@@ -196,7 +198,7 @@ Content-Type: application/json; charset=utf8
              your visitor to text the indicated phrase
              to the indicated phone number."
   "phrase": "START",
-  "phone_number": "555-FOO-BAAR"
+  "phone_number": "+1-555-FOO-BAAR"
 }</div>
 
 <p>This recipient has asked us not to text them. You can ask them to turn our texts back on.</p>
