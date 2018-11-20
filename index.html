@@ -1,0 +1,224 @@
+<head>
+    <title>The 2fa.horse: Two Factor Authentication as a Service, Pay with Lightning</title>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" media="screen and (max-width: 799px)" href="style/narrow.css">
+
+    <script>
+        function selectCode(language) {
+
+            var badCodeBlocks = document.querySelectorAll('.code');
+            for (var i = 0; i < badCodeBlocks.length; i++) {
+                badCodeBlocks[i].style.display = 'none';
+            }
+
+            var goodCodeBlocks = document.querySelectorAll('.code.' + language);
+            for (var i = 0; i < goodCodeBlocks.length; i++) {
+                goodCodeBlocks[i].style.display = 'block';
+            }
+
+            document.querySelector('.code-selection a.selected').
+                classList.remove('selected');
+            document.querySelector('.code-selection a.' + language).
+                classList.add('selected');
+        };
+
+
+    </script>
+</head>
+    <body><div id="container">
+    <h1><img src="images/header_emojis.png" alt="Header phone horse emoji"></h1>
+
+    <!--<h1>📱 🐎</h1>-->
+    <h2 class="subtitle">Two Factor Authentication as a Service<span class="clause-separation"></span>Pay with <img class="inline" alt="lightning" src="images/medium_lightning.png"></h2>
+
+    <h2>The Scenario</h2>
+
+    <p>You have a user that would like to authenticate to an account associated with the phone number 555-867-5309.</p>
+
+    <div class="type-label-you">
+        <span class="label">You</span>
+        <span class="code-selection">
+            (<a class="http selected" onclick="selectCode('http')">HTTP</a>,
+            <a class="curl" onclick="selectCode('curl')">cURL</a>)
+        </span>
+    </div>
+    <div class="type-label-server">
+        <span class="label">The 2fa.horse</span>
+    </div>
+
+    <div class="you code http">POST /v1/jobs/ HTTP/1.1
+Host: api.2fa.horse
+Content-Type: application/json
+Content-Length: 32
+
+{"phone number": "555-867-5309"}</div>
+
+    
+    <div style="display:none;" class="you code curl">$ curl -i http://api.2fa.horse/v1/jobs/ \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"phone_number":"555-867-5309"}'</div>
+
+    <div class="server">HTTP/1.1 201 CREATED
+Date: Thurs, 01 Jan 1970 00:00:00 GMT
+Content-Length: 212
+Content-Type: application/json; charset=utf8
+
+{
+  "href": "http://api.2fa.horse/v1/jobs/3ixdELtMgr/",
+  "verification_phrase": "3718375",
+  "sender_id": "hdbjf",
+  "lightning_invoice": "lnbcfoobarbazfoobarbazfoobarbaz...",
+  "paid": false,
+  "sent": false
+}</div>
+
+    <div class="you"><img class="inline" alt="lightning" src="images/small_lightning.png">lnbcfoobarbazfoobarbazfoobarbaz...<img class="inline" alt="lightning" src="images/small_lightning.png"></div>
+
+    <div class="server"><img class="inline" alt="phone" src="images/small_phone.png">To: 555-867-5309 <img class="inline" alt="phone" src="images/small_phone.png">
+<img class="inline" alt="phone" src="images/small_phone.png">You have received the code 3718375 from sender hdbjf.<img class="inline" alt="phone" src="images/small_phone.png">
+<img class="inline" alt="phone" src="images/small_phone.png">To block these messages, you may reply with STOP.<img class="inline" alt="phone" src="images/small_phone.png"></div>
+
+    <br style="clear:both">
+    <br>
+
+    <p>Now you can ask your visitor for the code that they received via text message.</p>
+
+    <p>You can also check the status of a job, although the initial 201 response is your only opportunity to retrieve the <code>verification_phrase</code> and <code>sender_id</code> values:
+
+    <div class="you code http">GET /v1/jobs/3ixdELtMgr/ HTTP/1.1
+Host: api.2fa.horse</div>
+
+    <div class="you code curl" style="display:none">$ curl -i http://api.2fa.horse/v1/jobs/3ixdELtMgr/</div>
+
+    <div class="server">HTTP/1.1 200 OK
+Date: Thurs, 01 Jan 1970 00:00:00 GMT
+Content-Length: 212
+Content-Type: application/json; charset=utf8
+
+{
+  "href": "http://api.2fa.horse/v1/jobs/3ixdELtMgr/",
+  "lightning_invoice": "lnbcfoobarbazfoobarbazfoobarbaz...",
+  "paid": true,
+  "sent": true
+}</div>
+
+<br style="clear:both">
+<br>
+
+<p>The price is currently $0.12 per job, but that will come down if this application sees significant use.</p>
+
+<h2>About</h2>
+
+<p>This is currently a demonstration project, but for the future:</p>
+
+<ol>
+  <li>If I am unable to keep this project up, I will open source it.
+  <li>If the service becomes popular or gets moderate interest:
+    <ol>
+        <li>I'll include more helpful features. 
+        <li>The price of the service will go down. It currently costs you $0.12 to use the `2fa.horse`.
+        <li>I'll construct a strong service guarantee and terms of service.
+    </ol>
+</ol>
+
+<p>If you think that this is an awesome project and would like to build a cool service on it sooner rather than later, contact me.</p>
+
+<h2>Why</h2>
+
+<p>Bitcoin means different things to different people. Bitcoin excites me because it facilitates computer-to-computer payments. With the lightning network, Bitcoin supports computer-to-computer micropayments.</p>
+
+</p>And now, your lightning-enabled software and devices can purchase 2FA services from the `2fa.horse`. I've created the `2fa.horse` as an example of a useful, lightning-enabled, microservice provider.</p>
+
+<p>The coolest project that I could imagine using this for is a lightning-network hardware wallet. If the user needed to perform some administrative function, like retrieving their wallet seed, then the wallet could autonomously issue a request to the 2fa.horse to help authenticate the user.</p>
+
+<h2>Service Guarantee</h2>
+
+<p>This service is for demonstration purposes only. The service guarantee is that there currently is no service guarantee. There are no refunds.</p>
+
+<h2>Disclaimer</h2>
+
+<p>In no event shall the 2fa.horse be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use of the Service or the contents of the Service. The 2fa.horse reserves the right to make additions, deletions, or modification to the contents on the Service at any time without prior notice.</p>
+
+<p>Once again, this service is for demonstrations purposes only.</p>
+
+<h2>Errors</h2>
+
+<h3>400 Bad Request: "Bad Number Format"</h3>
+
+<div class="server">HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf8
+
+{
+  "cause": "Bad number format",
+  "detail": "Your phone number is formatted incorrectly.
+              Please use the format nnn-nnn-nnnn."
+}</div>
+
+<p>Fix your number format.</p>
+
+<h3>400 Bad Request: "Bad Number"</h3>
+
+<div class="server">HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf8
+
+{
+  "cause": "Bad number",
+  "detail": "Invalid phone number, or we can't send
+             texts to this locale."
+}</div>
+
+<p>Sorry.</p>
+
+<h3>400 Bad Request: "Rate Limit"</h3>
+
+<div class="server">HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf8
+
+{
+  "cause": "Rate Limit",
+  "detail": "This phone number is rate-limit saturated
+             and we will not send another text at this
+             time.",
+  "duration": 25
+}</div>
+
+<p>We have sent multiple text messages to this number recently, and we will not send another for at least <code>duration</code> seconds.</p>
+
+<h3>400 Bad Request: "Blocked"</h3>
+
+<div class="server">HTTP/1.1 400 Bad Request
+Content-Type: application/json; charset=utf8
+
+{
+  "cause": "Blocked",
+  "detail": "Recipient has blocked our texts. Advise
+             your visitor to text the indicated phrase
+             to the indicated phone number."
+  "phrase": "START",
+  "phone_number": "555-FOO-BAAR"
+}</div>
+
+<p>This recipient has asked us not to text them. You can ask them to turn our texts back on.</p>
+
+<h3>404 Not Found</h3>
+
+<div class="server">HTTP/1.1 404 Not Found</div>
+
+<p>You can get this error for any of the usual reasons.</p>
+
+<h3>500 Internal Server Error</h3>
+
+<div class="server">HTTP/1.1 500 Internal Server Error</div>
+
+<p>This error indicates that our server encountered an error for a reason that we didn't anticipate.</p>
+
+<h2>Gallery</h2>
+
+<p>Made something cool with this service? Contact us and we'll link it here.</p>
+
+<h2>Contact</h2>
+
+Send an email to contact at two eff ay dot horse.
+
+</div></body>

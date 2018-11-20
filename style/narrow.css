@@ -1,0 +1,53 @@
+#container {
+    width:90%;
+    min-width:480px;
+    max-width:600px;
+}
+
+h2.subtitle span.clause-separation:after {
+    content: "\A";
+    white-space: pre;
+}
+
+div.server, div.you {
+    width: 90%;
+    padding:6px;
+}
+
+div[class^=type-label] {
+    width:auto;
+}
+
+div.type-label-server {
+    padding:3px;
+    padding-right: 6px;
+    float:right;
+}
+
+div.server, div.type-label-server {
+    border-right: 3px solid #CD6155;
+    border-left: none;
+    background-color: #F2D7D5;
+    border-radius: 3px 0 0 3px;
+    margin-left: 10%;
+    margin-right: 0px;
+}
+
+div.type-label-you {
+    padding: 3px;
+    padding-left: 6px;
+    margin-left:0px;
+}
+
+div.you, div.type-label-you { 
+    border-left: 3px solid #7D7D7D;
+    border-right: none;
+    background-color: #DDD;
+    border-radius: 0 3px 3px 0;
+    margin-left:0px;
+}
+
+div.server+p {
+    padding-top: 15px;
+    clear:both;
+}

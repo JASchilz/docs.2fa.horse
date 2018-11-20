@@ -1,0 +1,97 @@
+#container {
+    width:800px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+h1 {
+    font-size: 112px;
+    text-align:center;
+    margin-bottom: 0px;
+}
+
+h2.subtitle {
+    text-align:center;
+}
+
+h2.subtitle span.clause-separation:after {
+    content: ", ";
+}
+
+h2 {
+    margin-bottom:.3em;
+}
+
+h3 {
+    margin-top:0;
+    padding-top:1.2em;
+    margin-bottom:.3em;
+    clear:both;
+}
+
+p {
+    margin-top:0;
+}
+
+img.inline {
+    vertical-align: middle;
+    margin: 0 1px;
+}
+
+div.type-label-you span.label, div.type-label-server span.label {
+    text-decoration:underline;
+}
+
+div.type-label-you {
+    margin-left: 70px;
+}
+
+div[class^=type-label], div.you, div.server {
+    font-family: monospace;
+}
+
+
+div.you, div.server {
+    width:60%;
+    display: block;
+    white-space: pre;
+    margin: .2em 0;
+    clear:both;
+    border-left:3px solid #DDD;
+    padding-left:7px;
+}
+
+div.server {
+    float:right;
+}
+
+div.you {
+    float:left;
+}
+
+div[class^=type-label] {
+    clear:none;
+    border:none;
+    width:45%;
+    float:left;
+    margin-bottom:.3em;
+}
+
+span.code-selection {
+    text-decoration:none;
+}
+
+span.code-selection a {
+    cursor: pointer;
+    text-decoration:underline;
+    color: blue;
+}
+
+span.code-selection a:hover {
+    color: purple;
+}
+
+span.code-selection a.selected {
+    color: black;
+    text-decoration:none;
+}
